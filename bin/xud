@@ -1,12 +1,88 @@
 #!/usr/bin/env node
 
-const Xud = require('../lib/Xud');
+const Xud = require('../dist/Xud').default;
+
 const { argv } = require('yargs')
-  .number(['p2p.port', 'rpcPort', 'db.port', 'db.pool.max', 'raiden.port'])
-  .boolean(['db.operatorsAliases', 'p2p.listen'])
-  .default({
-    'db.operatorsAliases': undefined,
-    'p2p.listen': undefined,
+  .options({
+    xudir: {
+      describe: 'Data directory for xud',
+      type: 'string',
+      alias: 'x',
+    },
+    'db.database': {
+      describe: 'SQL database name',
+      type: 'string',
+    },
+    'db.host': {
+      describe: 'Hostname for SQL database',
+      type: 'string',
+    },
+    'db.port': {
+      describe: 'Port for SQL database',
+      type: 'number',
+    },
+    'db.username': {
+      describe: 'User for SQL database ',
+      type: 'string',
+    },
+    'lnd.certpath': {
+      describe: 'Path to the SSL certificate for lnd',
+      type: 'string',
+    },
+    'lnd.disable': {
+      describe: 'Disable lnd integration',
+      type: 'boolean',
+      default: undefined,
+    },
+    'lnd.host': {
+      describe: 'Host of the lnd gRPC interface',
+      type: 'string',
+    },
+    'lnd.macaroonpath': {
+      describe: 'Path of the admin macaroon for lnd',
+      type: 'string',
+    },
+    'lnd.port': {
+      describe: 'Port of the lnd gRPC interface',
+      type: 'number',
+    },
+    'p2p.listen': {
+      describe: 'Listen for incoming peers',
+      type: 'boolean',
+      default: undefined,
+    },
+    'p2p.port': {
+      describe: 'Port to listen for incoming peers',
+      type: 'number',
+      alias: 'p',
+    },
+    'raiden.disable': {
+      describe: 'Disable raiden integration',
+      type: 'boolean',
+      default: undefined,
+    },
+    'raiden.port': {
+      describe: 'Port for raiden REST service',
+      type: 'number',
+    },
+    'rpc.host': {
+      describe: 'gRPC service host',
+      type: 'string',
+    },
+    'rpc.port': {
+      describe: 'gRPC service port',
+      type: 'number',
+      alias: 'r',
+    },
+    'webproxy.disable': {
+      describe: 'Disable web proxy server',
+      type: 'boolean',
+      default: undefined,
+    },
+    'webproxy.port': {
+      describe: 'Port for web proxy server',
+      type: 'number',
+    },
   });
 
 // delete non-config keys from argv
